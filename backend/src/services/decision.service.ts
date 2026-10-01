@@ -3,7 +3,7 @@ import { decisionRepository } from '../repositories/decision.repository';
 export class DecisionService {
   async getAllRecommendations() {
     const list = await decisionRepository.getAll();
-    return list.map((item) => ({
+    return list.map((item: any) => ({
       ...item,
       actionPayload: item.actionPayloadJson ? JSON.parse(item.actionPayloadJson) : undefined,
     }));

@@ -3,9 +3,9 @@ import { workforceRepository } from '../repositories/workforce.repository';
 export class WorkforceService {
   async getAllEmployees() {
     const list = await workforceRepository.getAllEmployees();
-    return list.map((emp) => ({
+    return list.map((emp: any) => ({
       ...emp,
-      skills: JSON.parse(emp.skills),
+      skills: typeof emp.skills === 'string' ? JSON.parse(emp.skills) : emp.skills,
     }));
   }
 

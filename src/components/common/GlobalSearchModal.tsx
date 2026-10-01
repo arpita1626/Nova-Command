@@ -126,20 +126,20 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({ isOpen, on
             placeholder="Search machines, orders, employees, work orders, inventory..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full bg-transparent text-sm focus:outline-none placeholder-slate-400 font-medium"
+            className="w-full bg-transparent text-sm focus:outline-none placeholder-slate-500 dark:placeholder-slate-400 font-medium"
             style={{ color: 'var(--text-primary)' }}
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="text-xs px-1.5 py-0.5 rounded hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 cursor-pointer"
+              className="text-xs px-1.5 py-0.5 rounded hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold cursor-pointer"
             >
               Clear
             </button>
           )}
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-200 cursor-pointer"
+            className="p-1 rounded-lg text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 cursor-pointer"
           >
             <X className="h-5 w-5" />
           </button>
@@ -148,10 +148,10 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({ isOpen, on
         {/* Results List */}
         <div className="p-4 overflow-y-auto space-y-4 flex-1 text-xs">
           {totalResults === 0 ? (
-            <div className="text-center py-8 text-slate-400">
-              <Search className="h-8 w-8 mx-auto mb-2 opacity-40" />
-              <p className="font-semibold">No results found for "{query}"</p>
-              <p className="text-[11px] mt-1">Try searching for M-004, ORDER-1042, Marcus, or SP-104</p>
+            <div className="text-center py-8 text-slate-600 dark:text-slate-400">
+              <Search className="h-8 w-8 mx-auto mb-2 opacity-60 text-slate-500 dark:text-slate-400" />
+              <p className="font-semibold text-slate-800 dark:text-slate-200">No results found for "{query}"</p>
+              <p className="text-[11px] mt-1 text-slate-600 dark:text-slate-400">Try searching for M-004, ORDER-1042, Marcus, or SP-104</p>
             </div>
           ) : (
             <>

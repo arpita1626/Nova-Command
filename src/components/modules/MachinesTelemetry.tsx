@@ -268,7 +268,7 @@ export const MachinesTelemetry: React.FC = () => {
               <text
                 x="410"
                 y={150 - (machine.vibrationThreshold / 6) * 140 - 6}
-                fill="#d97706"
+                fill={isDark ? '#d97706' : '#92400e'}
                 fontSize="10"
                 fontWeight="bold"
               >
@@ -309,7 +309,7 @@ export const MachinesTelemetry: React.FC = () => {
                         <text
                           x={c.x}
                           y={c.y - 10}
-                          fill={c.val > machine.vibrationThreshold ? '#dc2626' : isDark ? '#94a3b8' : '#475569'}
+                          fill={c.val > machine.vibrationThreshold ? '#dc2626' : isDark ? '#94a3b8' : '#1E293B'}
                           fontSize="10"
                           textAnchor="middle"
                           fontWeight="bold"
@@ -319,9 +319,10 @@ export const MachinesTelemetry: React.FC = () => {
                         <text
                           x={c.x}
                           y="145"
-                          fill={isDark ? '#64748b' : '#94a3b8'}
+                          fill={isDark ? '#64748b' : '#334155'}
                           fontSize="9"
                           textAnchor="middle"
+                          fontWeight="semibold"
                         >
                           {c.time}
                         </text>
@@ -399,7 +400,7 @@ export const MachinesTelemetry: React.FC = () => {
                         <text
                           x={c.x}
                           y={c.y - 10}
-                          fill={c.val > 65 ? '#dc2626' : isDark ? '#fdba74' : '#9a3412'}
+                          fill={c.val > 65 ? '#dc2626' : isDark ? '#fdba74' : '#7C2D12'}
                           fontSize="10"
                           textAnchor="middle"
                           fontWeight="bold"
@@ -409,9 +410,10 @@ export const MachinesTelemetry: React.FC = () => {
                         <text
                           x={c.x}
                           y="145"
-                          fill={isDark ? '#64748b' : '#94a3b8'}
+                          fill={isDark ? '#64748b' : '#334155'}
                           fontSize="9"
                           textAnchor="middle"
+                          fontWeight="semibold"
                         >
                           {c.time}
                         </text>

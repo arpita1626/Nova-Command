@@ -1,5 +1,4 @@
-import { prisma } from '../utils/prisma';
-import { Prisma } from '@prisma/client';
+import { prisma, Prisma } from '../utils/prisma';
 
 export class ProcurementRepository {
   async getAll() {
@@ -91,7 +90,7 @@ export class ProcurementRepository {
     if (!item) throw new Error(`Item ${data.itemId} not found`);
 
     const existing = await prisma.purchaseOrder.findMany({ select: { id: true } });
-    const maxNum = existing.reduce((max, p) => {
+    const maxNum = existing.reduce((max: number, p: any) => {
       const match = p.id.match(/\d+/);
       return match ? Math.max(max, parseInt(match[0], 10)) : max;
     }, 904);

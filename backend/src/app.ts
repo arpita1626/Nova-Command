@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(requestLogger);
 
 // Service Root
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({
     service: 'NOVA COMMAND Backend API',
     status: 'ONLINE',
@@ -66,8 +66,8 @@ app.use('/api/decisions', decisionRoutes);
 app.use('/api/what-if', whatIfRoutes);
 app.use('/api/workforce', workforceRoutes);
 
-// 404 Handler
-app.use((req, res) => {
+// 404 Handler for /api routes
+app.use('/api', (req, res) => {
   res.status(404).json({
     success: false,
     error: `Cannot ${req.method} ${req.url}`,

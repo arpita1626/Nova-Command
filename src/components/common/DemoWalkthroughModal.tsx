@@ -170,7 +170,7 @@ export const DemoWalkthroughModal: React.FC<DemoWalkthroughModalProps> = ({ isOp
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg hover:opacity-75 cursor-pointer text-slate-400"
+            className="p-1 rounded-lg hover:opacity-75 cursor-pointer text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
           >
             <X className="h-5 w-5" />
           </button>

@@ -1,5 +1,4 @@
-import { prisma } from '../utils/prisma';
-import { Prisma } from '@prisma/client';
+import { prisma, Prisma } from '../utils/prisma';
 
 export class QualityRepository {
   async getAll() {
@@ -34,7 +33,7 @@ export class QualityRepository {
       if (!machine) throw new Error(`Machine ${data.machineId} not found`);
 
       const existing = await tx.qualityInspection.findMany({ select: { id: true } });
-      const maxNum = existing.reduce((max, q) => {
+      const maxNum = existing.reduce((max: number, q: any) => {
         const match = q.id.match(/\d+/);
         return match ? Math.max(max, parseInt(match[0], 10)) : max;
       }, 404);

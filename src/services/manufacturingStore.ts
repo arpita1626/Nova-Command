@@ -97,6 +97,20 @@ function notify() {
   listeners.forEach((listener) => listener(stateCopy));
 }
 
+export function getGlobalStoreState(): StoreState {
+  return { ...globalState };
+}
+
+export function switchGlobalUser(userId: string): AppUser | null {
+  const targetUser = globalState.users.find((u) => u.id === userId);
+  if (targetUser) {
+    globalState.currentUser = { ...targetUser };
+    notify();
+    return targetUser;
+  }
+  return null;
+}
+
 let syncPromise: Promise<void> | null = null;
 
 /**

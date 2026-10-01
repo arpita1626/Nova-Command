@@ -28,10 +28,13 @@ import { WelcomeModal } from './components/common/WelcomeModal';
 import { GlobalSearchModal } from './components/common/GlobalSearchModal';
 import { useManufacturingStore } from './services/manufacturingStore';
 import { ThemeProvider, useTheme } from './services/themeContext';
+import { AuthProvider, useAuth } from './services/authContext';
+import { LoginPage } from './components/auth/LoginPage';
 import { isTabAllowed } from './types/auth';
 import { CheckCircle2, AlertCircle, Info, AlertTriangle } from 'lucide-react';
 
 function AppContent() {
+  const { isAuthenticated, logout } = useAuth();
   const { activeTab, toastMessage, currentUser } = useManufacturingStore();
   const { isDark } = useTheme();
   const [isAlertsOpen, setIsAlertsOpen] = useState(false);
@@ -40,6 +43,18 @@ function AppContent() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserSelectionOpen, setIsUserSelectionOpen] = useState(false);
+
+  // Expose optional window.novaLogout for tester convenience
+  React.useEffect(() => {
+    (window as any).novaLogout = logout;
+    return () => {
+      delete (window as any).novaLogout;
+    };
+  }, [logout]);
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   const renderActiveModule = () => {
     // Role-based Access Control enforcement
@@ -192,7 +207,9 @@ function AppContent() {
 export default function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

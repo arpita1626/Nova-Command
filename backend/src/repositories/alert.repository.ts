@@ -30,7 +30,7 @@ export class AlertRepository {
     targetId?: string;
   }) {
     const existing = await prisma.alert.findMany({ select: { id: true } });
-    const maxNum = existing.reduce((max, a) => {
+    const maxNum = existing.reduce((max: number, a: any) => {
       const match = a.id.match(/\d+/);
       return match ? Math.max(max, parseInt(match[0], 10)) : max;
     }, 104);

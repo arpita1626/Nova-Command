@@ -113,8 +113,8 @@ export const Quality: React.FC = () => {
             </text>
 
             {/* Mean Line */}
-            <line x1="0" y1="65" x2="500" y2="65" stroke={isDark ? '#64748b' : '#94a3b8'} strokeWidth="1" strokeDasharray="2 2" />
-            <text x="430" y="60" fill={isDark ? '#64748b' : '#94a3b8'} fontSize="9">
+            <line x1="0" y1="65" x2="500" y2="65" stroke={isDark ? '#64748b' : '#64748B'} strokeWidth="1" strokeDasharray="2 2" />
+            <text x="430" y="60" fill={isDark ? '#64748b' : '#334155'} fontSize="9" fontWeight="bold">
               Mean: 0.45
             </text>
 
@@ -145,14 +145,14 @@ export const Quality: React.FC = () => {
                 <text
                   x={p.x}
                   y={p.y - 8}
-                  fill={p.exceed ? '#dc2626' : isDark ? '#94a3b8' : '#475569'}
+                  fill={p.exceed ? '#dc2626' : isDark ? '#94a3b8' : '#1E293B'}
                   fontSize="9"
                   textAnchor="middle"
                   fontWeight="bold"
                 >
                   {p.val}
                 </text>
-                <text x={p.x} y="115" fill={isDark ? '#64748b' : '#94a3b8'} fontSize="8" textAnchor="middle">
+                <text x={p.x} y="115" fill={isDark ? '#64748b' : '#334155'} fontSize="8" textAnchor="middle" fontWeight="bold">
                   {p.batch}
                 </text>
               </g>

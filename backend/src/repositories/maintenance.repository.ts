@@ -1,5 +1,4 @@
-import { prisma } from '../utils/prisma';
-import { Prisma } from '@prisma/client';
+import { prisma, Prisma } from '../utils/prisma';
 
 export class MaintenanceRepository {
   async getAll() {
@@ -52,7 +51,7 @@ export class MaintenanceRepository {
       }
 
       const existing = await tx.maintenanceWorkOrder.findMany({ select: { id: true } });
-      const maxNum = existing.reduce((max, w) => {
+      const maxNum = existing.reduce((max: number, w: any) => {
         const match = w.id.match(/\d+/);
         return match ? Math.max(max, parseInt(match[0], 10)) : max;
       }, 204);

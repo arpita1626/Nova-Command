@@ -82,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'Production Planning',
           icon: CalendarRange,
           badge: ordersAtRisk > 0 ? `${ordersAtRisk} Risk` : null,
-          badgeColor: 'text-amber-500 font-bold',
+          badgeColor: 'text-amber-700 dark:text-amber-400 font-bold',
         },
         {
           id: 'factory-floor',
@@ -95,14 +95,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'Machines',
           icon: Activity,
           badge: criticalMachines > 0 ? `${criticalMachines} Alert` : null,
-          badgeColor: 'text-rose-500 font-bold',
+          badgeColor: 'text-rose-700 dark:text-rose-400 font-bold',
         },
         {
           id: 'maintenance',
           label: 'Maintenance',
           icon: Wrench,
           badge: openWorkOrdersCount > 0 ? `${openWorkOrdersCount} Open` : null,
-          badgeColor: 'text-amber-500 font-bold',
+          badgeColor: 'text-amber-700 dark:text-amber-400 font-bold',
         },
       ],
     },
@@ -114,7 +114,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'Inventory',
           icon: Boxes,
           badge: lowStockCount > 0 ? `${lowStockCount} Low` : null,
-          badgeColor: 'text-orange-500 font-bold',
+          badgeColor: 'text-orange-700 dark:text-orange-400 font-bold',
         },
         {
           id: 'procurement',
@@ -144,7 +144,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'Orders & Delivery',
           icon: PackageCheck,
           badge: ordersAtRisk > 0 ? `${ordersAtRisk} Late Risk` : '8 Active',
-          badgeColor: ordersAtRisk > 0 ? 'text-rose-500 font-bold' : undefined,
+          badgeColor: ordersAtRisk > 0 ? 'text-rose-700 dark:text-rose-400 font-bold' : undefined,
         },
         {
           id: 'analytics',
@@ -162,14 +162,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'What-If Simulator',
           icon: GitFork,
           badge: 'Core Engine',
-          badgeColor: 'text-blue-600 dark:text-cyan-400 font-bold',
+          badgeColor: 'text-blue-700 dark:text-cyan-400 font-bold',
         },
         {
           id: 'decision-center',
           label: 'Decision Center',
           icon: BrainCircuit,
           badge: pendingRecs > 0 ? `${pendingRecs} Recs` : null,
-          badgeColor: 'text-purple-600 dark:text-purple-400 font-bold',
+          badgeColor: 'text-purple-700 dark:text-purple-400 font-bold',
         },
       ],
     },
@@ -181,7 +181,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'Admin Settings',
           icon: Shield,
           badge: 'RBAC',
-          badgeColor: 'text-purple-600 dark:text-purple-400 font-bold',
+          badgeColor: 'text-purple-700 dark:text-purple-400 font-bold',
         },
       ],
     }] : []),
@@ -350,10 +350,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }}
           >
             <div className="flex items-center gap-2">
-              <Bell className="h-3.5 w-3.5 text-amber-500" />
+              <Bell className="h-3.5 w-3.5 text-amber-700 dark:text-amber-400" />
               <span>Priority Alerts</span>
             </div>
-            <span className="text-[10px] font-bold text-amber-500">
+            <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400">
               {activeAlerts} Active
             </span>
           </button>

@@ -8,17 +8,17 @@
   --card: #FFFFFF;
   --sidebar: #FFFFFF;
   --header: #FFFFFF;
-  --border: #CBD5E1;
-  --border-subtle: #E2E8F0;
-  --text-primary: #0F172A;
-  --text-secondary: #334155;
-  --text-muted: #64748B;
+  --border: #94A3B8;
+  --border-subtle: #CBD5E1;
+  --text-primary: #090D16;
+  --text-secondary: #1E293B;
+  --text-muted: #334155;
   --accent: #1D4ED8;
-  --accent-secondary: #4F46E5;
+  --accent-secondary: #4338CA;
   --success: #15803D;
   --success-bg: #DCFCE7;
   --success-text: #14532D;
-  --warning: #B45309;
+  --warning: #92400E;
   --warning-bg: #FEF3C7;
   --warning-text: #78350F;
   --critical: #B91C1C;
@@ -28,15 +28,299 @@
   --info-bg: #E0F2FE;
   --info-text: #0C4A6E;
   --chart-grid: #CBD5E1;
-  --chart-text: #334155;
+  --chart-text: #1E293B;
   --input-bg: #FFFFFF;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.06);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-  --glass-bg: rgba(255, 255, 255, 0.95);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12), 0 4px 6px -4px rgb(0 0 0 / 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.98);
   --scroll-track: #F1F5F9;
-  --scroll-thumb: #94A3B8;
-  --scroll-thumb-hover: #64748B;
+  --scroll-thumb: #64748B;
+  --scroll-thumb-hover: #475569;
+}
+
+/* ============================================================== */
+/* LIGHT MODE TEXT CONTRAST & READABILITY OVERRIDES (WCAG AA/AAA) */
+/* Applies ONLY in Light Mode - Dark Mode remains untouched       */
+/* ============================================================== */
+
+:root:not(.dark):not([data-theme="dark"]),
+html.light,
+html:not(.dark) {
+  --text-primary: #090D16;
+  --text-secondary: #1E293B;
+  --text-muted: #334155;
+  --warning: #92400E;
+}
+
+/* Secondary & Muted Text Overrides for Light Mode */
+:root:not(.dark):not([data-theme="dark"]) .text-slate-400,
+:root:not(.dark):not([data-theme="dark"]) .text-gray-400,
+:root:not(.dark):not([data-theme="dark"]) .text-zinc-400,
+:root:not(.dark):not([data-theme="dark"]) .text-neutral-400,
+html.light .text-slate-400,
+html.light .text-gray-400,
+html.light .text-zinc-400,
+html.light .text-neutral-400,
+html:not(.dark) .text-slate-400,
+html:not(.dark) .text-gray-400 {
+  color: #334155 !important; /* Slate-700: 7.3:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-slate-500,
+:root:not(.dark):not([data-theme="dark"]) .text-gray-500,
+:root:not(.dark):not([data-theme="dark"]) .text-zinc-500,
+:root:not(.dark):not([data-theme="dark"]) .text-neutral-500,
+html.light .text-slate-500,
+html.light .text-gray-500,
+html.light .text-zinc-500,
+html:not(.dark) .text-slate-500,
+html:not(.dark) .text-gray-500 {
+  color: #1E293B !important; /* Slate-800: 11.2:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-slate-600,
+:root:not(.dark):not([data-theme="dark"]) .text-gray-600,
+:root:not(.dark):not([data-theme="dark"]) .text-zinc-600,
+html.light .text-slate-600,
+html.light .text-gray-600,
+html:not(.dark) .text-slate-600,
+html:not(.dark) .text-gray-600 {
+  color: #1E293B !important; /* Slate-800: 11.2:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-slate-300,
+:root:not(.dark):not([data-theme="dark"]) .text-gray-300,
+html.light .text-slate-300,
+html.light .text-gray-300,
+html:not(.dark) .text-slate-300,
+html:not(.dark) .text-gray-300 {
+  color: #334155 !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-muted-foreground,
+html.light .text-muted-foreground,
+html:not(.dark) .text-muted-foreground {
+  color: #334155 !important;
+}
+
+/* Semantic Status Text Colors in Light Mode (High Contrast WCAG AA/AAA) */
+:root:not(.dark):not([data-theme="dark"]) .text-amber-400,
+:root:not(.dark):not([data-theme="dark"]) .text-amber-500,
+:root:not(.dark):not([data-theme="dark"]) .text-amber-600,
+:root:not(.dark):not([data-theme="dark"]) .text-yellow-400,
+:root:not(.dark):not([data-theme="dark"]) .text-yellow-500,
+:root:not(.dark):not([data-theme="dark"]) .text-yellow-600,
+:root:not(.dark):not([data-theme="dark"]) .text-orange-500,
+html.light .text-amber-400,
+html.light .text-amber-500,
+html.light .text-amber-600,
+html.light .text-yellow-500,
+html:not(.dark) .text-amber-500,
+html:not(.dark) .text-amber-600 {
+  color: #92400E !important; /* Amber-800: 5.6:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-amber-700,
+html.light .text-amber-700,
+html:not(.dark) .text-amber-700 {
+  color: #78350F !important; /* Amber-900: 7.8:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-emerald-400,
+:root:not(.dark):not([data-theme="dark"]) .text-emerald-500,
+:root:not(.dark):not([data-theme="dark"]) .text-green-400,
+:root:not(.dark):not([data-theme="dark"]) .text-green-500,
+html.light .text-emerald-400,
+html.light .text-emerald-500,
+html.light .text-green-500,
+html:not(.dark) .text-emerald-500 {
+  color: #15803D !important; /* Emerald-700: 5.2:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-emerald-600,
+:root:not(.dark):not([data-theme="dark"]) .text-green-600,
+html.light .text-emerald-600,
+html:not(.dark) .text-emerald-600 {
+  color: #14532D !important; /* Emerald-900: 9.2:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-rose-400,
+:root:not(.dark):not([data-theme="dark"]) .text-rose-500,
+:root:not(.dark):not([data-theme="dark"]) .text-red-400,
+:root:not(.dark):not([data-theme="dark"]) .text-red-500,
+html.light .text-rose-400,
+html.light .text-rose-500,
+html.light .text-red-500,
+html:not(.dark) .text-rose-500 {
+  color: #B91C1C !important; /* Red-700: 5.8:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-rose-600,
+:root:not(.dark):not([data-theme="dark"]) .text-red-600,
+html.light .text-rose-600,
+html:not(.dark) .text-rose-600 {
+  color: #991B1B !important; /* Red-800: 7.8:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-cyan-400,
+:root:not(.dark):not([data-theme="dark"]) .text-cyan-500,
+:root:not(.dark):not([data-theme="dark"]) .text-sky-400,
+:root:not(.dark):not([data-theme="dark"]) .text-sky-500,
+:root:not(.dark):not([data-theme="dark"]) .text-teal-500,
+html.light .text-cyan-400,
+html.light .text-cyan-500,
+html.light .text-sky-500,
+html:not(.dark) .text-cyan-500 {
+  color: #0369A1 !important; /* Sky-700: 5.5:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-cyan-600,
+:root:not(.dark):not([data-theme="dark"]) .text-sky-600,
+html.light .text-cyan-600,
+html:not(.dark) .text-cyan-600 {
+  color: #075985 !important; /* Sky-800: 7.3:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-blue-400,
+:root:not(.dark):not([data-theme="dark"]) .text-blue-500,
+html.light .text-blue-400,
+html.light .text-blue-500,
+html:not(.dark) .text-blue-500 {
+  color: #1D4ED8 !important; /* Blue-700: 6.2:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-blue-600,
+html.light .text-blue-600,
+html:not(.dark) .text-blue-600 {
+  color: #1E40AF !important; /* Blue-800: 8.4:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-indigo-400,
+:root:not(.dark):not([data-theme="dark"]) .text-indigo-500,
+html.light .text-indigo-400,
+html.light .text-indigo-500,
+html:not(.dark) .text-indigo-500 {
+  color: #4338CA !important; /* Indigo-700: 6.8:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-indigo-600,
+html.light .text-indigo-600,
+html:not(.dark) .text-indigo-600 {
+  color: #3730A3 !important; /* Indigo-800: 9.1:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-purple-400,
+:root:not(.dark):not([data-theme="dark"]) .text-purple-500,
+html.light .text-purple-400,
+html.light .text-purple-500,
+html:not(.dark) .text-purple-500 {
+  color: #7E22CE !important; /* Purple-700: 6.3:1 contrast on white */
+}
+
+:root:not(.dark):not([data-theme="dark"]) .text-purple-600,
+html.light .text-purple-600,
+html:not(.dark) .text-purple-600 {
+  color: #6B21A8 !important; /* Purple-800: 8.2:1 contrast on white */
+}
+
+/* Button & interactive icons in Light Mode */
+:root:not(.dark):not([data-theme="dark"]) button .text-slate-400,
+:root:not(.dark):not([data-theme="dark"]) button.text-slate-400,
+html.light button .text-slate-400,
+html.light button.text-slate-400,
+html:not(.dark) button .text-slate-400,
+:root:not(.dark):not([data-theme="dark"]) button .text-slate-500,
+:root:not(.dark):not([data-theme="dark"]) button.text-slate-500,
+html.light button .text-slate-500,
+html.light button.text-slate-500,
+html:not(.dark) button .text-slate-500 {
+  color: #334155 !important;
+}
+
+/* Badges with light backgrounds */
+:root:not(.dark):not([data-theme="dark"]) .bg-slate-100 .text-slate-600,
+:root:not(.dark):not([data-theme="dark"]) .bg-slate-100.text-slate-600,
+:root:not(.dark):not([data-theme="dark"]) .bg-slate-100 .text-slate-700,
+:root:not(.dark):not([data-theme="dark"]) .bg-slate-100.text-slate-700,
+:root:not(.dark):not([data-theme="dark"]) .bg-slate-200 .text-slate-700,
+:root:not(.dark):not([data-theme="dark"]) .bg-slate-200.text-slate-700,
+html.light .bg-slate-100 .text-slate-600,
+html.light .bg-slate-100.text-slate-600,
+html.light .bg-slate-200.text-slate-700,
+html:not(.dark) .bg-slate-100 .text-slate-600 {
+  color: #0F172A !important; /* Slate-900: maximum contrast on light badge */
+}
+
+/* Placeholders in Light Mode */
+:root:not(.dark):not([data-theme="dark"]) ::placeholder,
+:root:not(.dark):not([data-theme="dark"]) input::placeholder,
+:root:not(.dark):not([data-theme="dark"]) textarea::placeholder,
+html.light ::placeholder,
+html:not(.dark) ::placeholder {
+  color: #475569 !important; /* Slate-600: 5.5:1 contrast against white */
+  opacity: 1 !important;
+}
+
+/* Ensure disabled buttons & inputs remain readable in Light Mode */
+:root:not(.dark):not([data-theme="dark"]) button:disabled,
+:root:not(.dark):not([data-theme="dark"]) input:disabled,
+:root:not(.dark):not([data-theme="dark"]) select:disabled,
+html.light button:disabled,
+html.light input:disabled,
+html.light select:disabled,
+html:not(.dark) button:disabled,
+html:not(.dark) input:disabled,
+html:not(.dark) select:disabled {
+  opacity: 0.72 !important;
+  color: #334155 !important;
+}
+
+/* Prevent excessive fading from opacity utilities in Light Mode */
+:root:not(.dark):not([data-theme="dark"]) .opacity-20,
+:root:not(.dark):not([data-theme="dark"]) .opacity-25,
+:root:not(.dark):not([data-theme="dark"]) .opacity-30,
+:root:not(.dark):not([data-theme="dark"]) .opacity-40,
+html.light .opacity-20,
+html.light .opacity-25,
+html.light .opacity-30,
+html.light .opacity-40,
+html:not(.dark) .opacity-40 {
+  opacity: 0.75 !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) .opacity-50,
+:root:not(.dark):not([data-theme="dark"]) .opacity-60,
+html.light .opacity-50,
+html.light .opacity-60,
+html:not(.dark) .opacity-50,
+html:not(.dark) .opacity-60 {
+  opacity: 0.85 !important;
+}
+
+/* SVG Chart text elements in Light Mode */
+:root:not(.dark):not([data-theme="dark"]) svg text[fill="#94a3b8"],
+:root:not(.dark):not([data-theme="dark"]) svg text[fill="#94A3B8"],
+html.light svg text[fill="#94a3b8"],
+html.light svg text[fill="#94A3B8"],
+html:not(.dark) svg text[fill="#94a3b8"],
+html:not(.dark) svg text[fill="#94A3B8"] {
+  fill: #334155 !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) svg text[fill="#64748b"],
+:root:not(.dark):not([data-theme="dark"]) svg text[fill="#64748B"],
+html.light svg text[fill="#64748b"],
+html.light svg text[fill="#64748B"],
+html:not(.dark) svg text[fill="#64748b"],
+html:not(.dark) svg text[fill="#64748B"] {
+  fill: #334155 !important;
+}
+
+:root:not(.dark):not([data-theme="dark"]) svg text[fill="#475569"],
+html.light svg text[fill="#475569"],
+html:not(.dark) svg text[fill="#475569"] {
+  fill: #1E293B !important;
 }
 
 :root[data-theme="dark"],

@@ -5,9 +5,9 @@ export class QualityController {
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const qis = await qualityService.getAllInspections();
-      const parsed = qis.map((q) => ({
+      const parsed = qis.map((q: any) => ({
         ...q,
-        defects: JSON.parse(q.defectsJson),
+        defects: typeof q.defectsJson === 'string' ? JSON.parse(q.defectsJson) : q.defectsJson,
       }));
       res.json({
         success: true,

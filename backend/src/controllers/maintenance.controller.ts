@@ -5,9 +5,9 @@ export class MaintenanceController {
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const wos = await maintenanceService.getAllWorkOrders();
-      const parsed = wos.map((w) => ({
+      const parsed = wos.map((w: any) => ({
         ...w,
-        sparePartIds: w.spareParts.map((sp) => sp.sparePartId),
+        sparePartIds: (w.spareParts || []).map((sp: any) => sp.sparePartId),
       }));
       res.json({
         success: true,
@@ -21,12 +21,12 @@ export class MaintenanceController {
 
   async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const wo = await maintenanceService.getWorkOrderById(req.params.id);
+      const wo: any = await maintenanceService.getWorkOrderById(req.params.id);
       res.json({
         success: true,
         data: {
           ...wo,
-          sparePartIds: wo.spareParts.map((sp) => sp.sparePartId),
+          sparePartIds: (wo?.spareParts || []).map((sp: any) => sp.sparePartId),
         },
         timestamp: new Date().toISOString(),
       });

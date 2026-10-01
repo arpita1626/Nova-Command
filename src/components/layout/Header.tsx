@@ -121,7 +121,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Global Search Bar Button (Middle) */}
         <button
           onClick={onOpenSearch}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-all cursor-pointer max-w-[220px] sm:max-w-xs w-full shadow-2xs font-medium"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-slate-100 transition-all cursor-pointer max-w-[220px] sm:max-w-xs w-full shadow-2xs font-semibold"
           style={{
             backgroundColor: 'var(--surface-secondary)',
             borderColor: 'var(--border)',
@@ -129,8 +129,8 @@ export const Header: React.FC<HeaderProps> = ({
           title="Search machines, orders, employees, work orders, inventory (⌘K)"
         >
           <Search className="h-3.5 w-3.5 text-blue-700 dark:text-cyan-400 shrink-0" />
-          <span className="truncate text-left flex-1 text-slate-600 dark:text-slate-400 font-medium">Search factory...</span>
-          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded border bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 font-semibold">
+          <span className="truncate text-left flex-1 text-slate-700 dark:text-slate-300 font-medium">Search factory...</span>
+          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded border bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-400 dark:border-slate-700 font-bold">
             ⌘K
           </kbd>
         </button>
@@ -157,8 +157,8 @@ export const Header: React.FC<HeaderProps> = ({
             <span
               className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${
                 isBackendConnected
-                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-                  : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
+                  ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/40'
+                  : 'bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/40'
               }`}
               title={isBackendConnected ? 'Connected to live SQLite backend API' : backendError || 'Backend disconnected'}
             >
@@ -263,7 +263,7 @@ export const Header: React.FC<HeaderProps> = ({
               color: 'var(--text-primary)',
             }}
           >
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
+            <AlertTriangle className="h-3.5 w-3.5 text-amber-700 dark:text-amber-400" />
             <span className="hidden md:inline">Alerts</span>
             {(criticalAlertsCount > 0 || highAlertsCount > 0) && (
               <span className="flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-rose-600 text-white text-[10px] font-bold">
@@ -279,7 +279,7 @@ export const Header: React.FC<HeaderProps> = ({
                 resetAllData();
               }
             }}
-            className="p-1.5 rounded-lg border transition-colors cursor-pointer text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
+            className="p-1.5 rounded-lg border transition-colors cursor-pointer text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200"
             style={{
               backgroundColor: 'var(--surface-secondary)',
               borderColor: 'var(--border)',

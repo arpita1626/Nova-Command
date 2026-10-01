@@ -5,9 +5,9 @@ export class OrderController {
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const orders = await orderService.getAllOrders();
-      const parsed = orders.map((o) => ({
+      const parsed = orders.map((o: any) => ({
         ...o,
-        riskReasons: JSON.parse(o.riskReasons),
+        riskReasons: typeof o.riskReasons === 'string' ? JSON.parse(o.riskReasons) : o.riskReasons,
       }));
       res.json({
         success: true,

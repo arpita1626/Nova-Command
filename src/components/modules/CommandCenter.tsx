@@ -204,7 +204,7 @@ export const CommandCenter: React.FC = () => {
                 />
                 {hasIssues ? 'Attention Required' : 'Operational'}
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-slate-700 dark:text-slate-400 font-medium">
                 — {hasIssues
                   ? 'Line 2 Lathe M-004 has abnormal vibration; 2 customer orders have delivery risk.'
                   : 'All machines nominal and orders on track.'}
@@ -340,10 +340,10 @@ export const CommandCenter: React.FC = () => {
       {/* ============================================================== */}
       <div>
         <div className="flex items-center justify-between pb-2 mb-2">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-400">
             Factory Vital Signs
           </h2>
-          <span className="text-[11px] text-slate-400">Click any card to inspect module</span>
+          <span className="text-[11px] text-slate-700 dark:text-slate-400 font-medium">Click any card to inspect module</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -417,7 +417,7 @@ export const CommandCenter: React.FC = () => {
       {/* ============================================================== */}
       <div>
         <div className="flex items-center justify-between pb-2 mb-2">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-400">
             Level 2: Active Production & Resource Flow
           </h2>
         </div>

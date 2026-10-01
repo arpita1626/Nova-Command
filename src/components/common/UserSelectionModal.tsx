@@ -55,7 +55,7 @@ export const UserSelectionModal: React.FC<UserSelectionModalProps> = ({ isOpen, 
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+          className="absolute top-4 right-4 p-1 rounded-lg text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 cursor-pointer"
           aria-label="Close user selection"
         >
           <X className="h-5 w-5" />

@@ -251,7 +251,7 @@ export const ConnectedImpactBanner: React.FC = () => {
               {idx < stages.length - 1 && (
                 <div
                   className="hidden lg:flex absolute -right-2 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
-                  style={{ color: isDark ? 'var(--accent)' : '#93C5FD' }}
+                  style={{ color: isDark ? 'var(--accent)' : '#1D4ED8' }}
                 >
                   <ArrowRight className="h-3.5 w-3.5" />
                 </div>

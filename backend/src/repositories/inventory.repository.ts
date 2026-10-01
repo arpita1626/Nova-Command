@@ -1,5 +1,4 @@
-import { prisma } from '../utils/prisma';
-import { Prisma } from '@prisma/client';
+import { prisma, Prisma } from '../utils/prisma';
 
 export class InventoryRepository {
   async getAll() {
