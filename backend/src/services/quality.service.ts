@@ -20,6 +20,18 @@ export class QualityService {
     await consequenceEngineService.propagate();
     return created;
   }
+
+  async getAllCorrectiveActions() {
+    return qualityRepository.getAllCorrectiveActions();
+  }
+
+  async createCorrectiveAction(data: any) {
+    return qualityRepository.createCorrectiveAction(data);
+  }
+
+  async updateCorrectiveActionStatus(id: string, status: string) {
+    return qualityRepository.updateCorrectiveActionStatus(id, status);
+  }
 }
 
 export const qualityService = new QualityService();

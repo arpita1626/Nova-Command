@@ -2,7 +2,7 @@
  * User Roles and Access Control Types
  */
 
-export type UserRole = 'ADMIN' | 'MANAGER' | 'HR';
+export type UserRole = 'ADMIN' | 'MANAGER' | 'HR' | 'PRODUCTION_PLANNER' | 'QUALITY_INSPECTOR';
 
 export interface AppUser {
   id: string;
@@ -40,6 +40,28 @@ export const DEMO_USERS: AppUser[] = [
     description: 'Access to operational modules: Command Center, Production, Factory Floor, Machines, Maintenance, Inventory, Procurement, Analytics.',
   },
   {
+    id: 'user-planner',
+    name: 'Rahul Sharma',
+    email: 'rahul.sharma@novacommand.io',
+    role: 'PRODUCTION_PLANNER',
+    title: 'Lead Production Planner',
+    initials: 'RS',
+    department: 'Production Planning & Control',
+    avatarBg: 'bg-amber-600 text-white',
+    description: 'Manages production schedules, machine allocation, capacity, material readiness, and order priorities.',
+  },
+  {
+    id: 'user-inspector',
+    name: 'Priya Das',
+    email: 'priya.das@novacommand.io',
+    role: 'QUALITY_INSPECTOR',
+    title: 'Senior Quality Inspector',
+    initials: 'PD',
+    department: 'Quality Assurance & Metrology',
+    avatarBg: 'bg-emerald-600 text-white',
+    description: 'Monitors inspections, defects, quality trends, SPC data, and corrective actions.',
+  },
+  {
     id: 'user-hr',
     name: 'HR User',
     email: 'hr.user@novacommand.io',
@@ -47,7 +69,7 @@ export const DEMO_USERS: AppUser[] = [
     title: 'Human Resources & People Operations',
     initials: 'HR',
     department: 'Human Resources',
-    avatarBg: 'bg-emerald-600 text-white',
+    avatarBg: 'bg-teal-600 text-white',
     description: 'Access to Command Center, Workforce, employee information, and HR analytics.',
   },
 ];
@@ -63,7 +85,7 @@ export interface RoleConfig {
 export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
   ADMIN: {
     role: 'ADMIN',
-    label: 'ADMIN',
+    label: 'ADMIN / MANAGER',
     badgeClass: 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border-purple-300 dark:border-purple-800',
     description: 'Full administrative access across all system features and user management.',
     allowedTabs: [
@@ -104,10 +126,44 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       'analytics',
     ],
   },
+  PRODUCTION_PLANNER: {
+    role: 'PRODUCTION_PLANNER',
+    label: 'PRODUCTION PLANNER',
+    badgeClass: 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border-amber-300 dark:border-amber-800',
+    description: 'Manages production schedules, machine capacity, material readiness, What-If simulation, and order delivery.',
+    allowedTabs: [
+      'command-center',
+      'production',
+      'factory-floor',
+      'machines',
+      'orders',
+      'inventory',
+      'maintenance',
+      'what-if',
+      'decision-center',
+      'analytics',
+    ],
+  },
+  QUALITY_INSPECTOR: {
+    role: 'QUALITY_INSPECTOR',
+    label: 'QUALITY INSPECTOR',
+    badgeClass: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800',
+    description: 'Monitors inspections, defects, quality trends, SPC data, and corrective actions.',
+    allowedTabs: [
+      'command-center',
+      'quality',
+      'factory-floor',
+      'machines',
+      'production',
+      'orders',
+      'corrective-actions',
+      'analytics',
+    ],
+  },
   HR: {
     role: 'HR',
     label: 'HR',
-    badgeClass: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800',
+    badgeClass: 'bg-teal-100 text-teal-800 dark:bg-teal-950/80 dark:text-teal-300 border-teal-300 dark:border-teal-800',
     description: 'Access to Command Center, Workforce, and HR-related operational analytics.',
     allowedTabs: [
       'command-center',

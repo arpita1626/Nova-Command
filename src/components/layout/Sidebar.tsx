@@ -19,6 +19,7 @@ import {
   X,
   Shield,
   KeyRound,
+  ShieldAlert,
 } from 'lucide-react';
 import { useManufacturingStore } from '../../services/manufacturingStore';
 import { useTheme } from '../../services/themeContext';
@@ -70,7 +71,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
           id: 'command-center',
           label: 'Command Center',
           icon: LayoutDashboard,
-          badge: null,
+          badge:
+            currentUser.role === 'PRODUCTION_PLANNER'
+              ? 'Planner'
+              : currentUser.role === 'QUALITY_INSPECTOR'
+              ? 'Quality'
+              : null,
+          badgeColor:
+            currentUser.role === 'PRODUCTION_PLANNER'
+              ? 'text-amber-700 dark:text-amber-400 font-bold'
+              : 'text-emerald-700 dark:text-emerald-400 font-bold',
         },
       ],
     },
@@ -79,7 +89,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         {
           id: 'production',
-          label: 'Production Planning',
+          label: currentUser.role === 'QUALITY_INSPECTOR' ? 'Production' : 'Production Planning',
           icon: CalendarRange,
           badge: ordersAtRisk > 0 ? `${ordersAtRisk} Risk` : null,
           badgeColor: 'text-amber-700 dark:text-amber-400 font-bold',
@@ -99,7 +109,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         },
         {
           id: 'maintenance',
-          label: 'Maintenance',
+          label: currentUser.role === 'PRODUCTION_PLANNER' ? 'Maintenance Impact' : 'Maintenance',
           icon: Wrench,
           badge: openWorkOrdersCount > 0 ? `${openWorkOrdersCount} Open` : null,
           badgeColor: 'text-amber-700 dark:text-amber-400 font-bold',
@@ -140,8 +150,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
           badge: '98.2%',
         },
         {
+          id: 'corrective-actions',
+          label: 'Corrective Actions',
+          icon: ShieldAlert,
+          badge: '2 Open',
+          badgeColor: 'text-blue-700 dark:text-cyan-400 font-bold',
+        },
+        {
           id: 'orders',
-          label: 'Orders & Delivery',
+          label: currentUser.role === 'QUALITY_INSPECTOR' ? 'Orders & Batches' : 'Orders & Delivery',
           icon: PackageCheck,
           badge: ordersAtRisk > 0 ? `${ordersAtRisk} Late Risk` : '8 Active',
           badgeColor: ordersAtRisk > 0 ? 'text-rose-700 dark:text-rose-400 font-bold' : undefined,

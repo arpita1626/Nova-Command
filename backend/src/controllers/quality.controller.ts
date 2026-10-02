@@ -68,6 +68,47 @@ export class QualityController {
       next(error);
     }
   }
+
+  async getCorrectiveActions(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const actions = await qualityService.getAllCorrectiveActions();
+      res.json({
+        success: true,
+        data: actions,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async createCorrectiveAction(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const created = await qualityService.createCorrectiveAction(req.body);
+      res.status(201).json({
+        success: true,
+        data: created,
+        message: `Corrective Action ${created.id} created`,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateCorrectiveAction(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const updated = await qualityService.updateCorrectiveActionStatus(req.params.id, req.body.status);
+      res.json({
+        success: true,
+        data: updated,
+        message: `Corrective Action ${req.params.id} updated to ${req.body.status}`,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const qualityController = new QualityController();

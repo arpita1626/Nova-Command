@@ -12,6 +12,8 @@ import {
   Alert,
   DecisionRecommendation,
   WhatIfScenario,
+  AuditLog,
+  CorrectiveAction,
 } from '../types';
 import {
   initialMachines,
@@ -26,9 +28,11 @@ import {
   initialAlerts,
   initialRecommendations,
   initialWhatIfScenario,
+  initialAuditLogs,
+  initialCorrectiveActions,
 } from '../data/initialData';
-import { AppUser, UserRole, DEMO_USERS } from '../types/auth';
-import { ApiService } from './api';
+import { AppUser, UserRole, DEMO_USERS, isTabAllowed } from '../types/auth';
+import { ApiService, setApiAuthContext } from './api';
 
 export interface StoreState {
   machines: Machine[];
@@ -54,6 +58,8 @@ export interface StoreState {
   toastMessage: { text: string; type: 'success' | 'info' | 'warning' | 'error' } | null;
   users: AppUser[];
   currentUser: AppUser;
+  auditLogs: AuditLog[];
+  correctiveActions: CorrectiveAction[];
   // Connection & sync state
   isLoading: boolean;
   isBackendConnected: boolean;
@@ -85,6 +91,8 @@ let globalState: StoreState = {
   toastMessage: null,
   users: JSON.parse(JSON.stringify(DEMO_USERS)),
   currentUser: JSON.parse(JSON.stringify(DEMO_USERS[0])),
+  auditLogs: JSON.parse(JSON.stringify(initialAuditLogs)),
+  correctiveActions: JSON.parse(JSON.stringify(initialCorrectiveActions)),
   isLoading: true,
   isBackendConnected: false,
   backendError: null,
@@ -105,6 +113,10 @@ export function switchGlobalUser(userId: string): AppUser | null {
   const targetUser = globalState.users.find((u) => u.id === userId);
   if (targetUser) {
     globalState.currentUser = { ...targetUser };
+    setApiAuthContext(targetUser);
+    if (!isTabAllowed(globalState.activeTab, targetUser.role)) {
+      globalState.activeTab = 'command-center';
+    }
     notify();
     return targetUser;
   }
@@ -136,11 +148,18 @@ export async function syncStateFromBackend(): Promise<void> {
       globalState.recommendations = data.recommendations;
       globalState.whatIfScenario = data.whatIfScenario;
       globalState.users = data.users.length > 0 ? data.users : globalState.users;
+      if (data.auditLogs && data.auditLogs.length > 0) {
+        globalState.auditLogs = data.auditLogs;
+      }
+      if (data.correctiveActions && data.correctiveActions.length > 0) {
+        globalState.correctiveActions = data.correctiveActions;
+      }
 
       // Ensure currentUser stays synced
       const foundUser = globalState.users.find((u) => u.id === globalState.currentUser.id);
       if (foundUser) {
         globalState.currentUser = { ...foundUser };
+        setApiAuthContext(foundUser);
       }
 
       globalState.plantShift = data.systemStatus.activeShift;
@@ -309,6 +328,83 @@ export function useManufacturingStore() {
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
         setToast({ text: `Failed to reroute operation: ${msg}`, type: 'error' });
+        throw err;
+      }
+    },
+
+    rescheduleOperation: async (operationId: string, updates: Partial<Operation>) => {
+      try {
+        const updated = await ApiService.rescheduleOperation(operationId, updates);
+        await syncStateFromBackend();
+        setToast({
+          text: `Operation ${updated.id} schedule updated (${updates.scheduledStart || ''} - ${updates.scheduledEnd || ''}).`,
+          type: 'success',
+        });
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setToast({ text: `Failed to reschedule operation: ${msg}`, type: 'error' });
+        throw err;
+      }
+    },
+
+    addCorrectiveAction: async (ca: Partial<CorrectiveAction>) => {
+      try {
+        const created = await ApiService.createCorrectiveAction(ca);
+        await syncStateFromBackend();
+        setToast({
+          text: `Corrective Action ${created.id} logged for ${created.machineId}. Assigned to ${created.assignedTo}.`,
+          type: 'success',
+        });
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setToast({ text: `Failed to create corrective action: ${msg}`, type: 'error' });
+        throw err;
+      }
+    },
+
+    updateCorrectiveActionStatus: async (id: string, status: string) => {
+      try {
+        await ApiService.updateCorrectiveActionStatus(id, status);
+        await syncStateFromBackend();
+        setToast({
+          text: `Corrective Action ${id} status updated to ${status.toUpperCase()}.`,
+          type: 'info',
+        });
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setToast({ text: `Failed to update corrective action: ${msg}`, type: 'error' });
+        throw err;
+      }
+    },
+
+    recordAuditLog: async (entry: Partial<AuditLog>) => {
+      try {
+        await ApiService.createAuditLog(entry);
+        await syncStateFromBackend();
+      } catch (err: unknown) {
+        console.warn('Failed to record audit log:', err);
+      }
+    },
+
+    submitPlanForApproval: async (planTitle: string, notes: string) => {
+      try {
+        await ApiService.createAuditLog({
+          user: globalState.currentUser.name,
+          role: globalState.currentUser.role,
+          action: `Submitted revised production plan "${planTitle}" for Manager approval. Notes: ${notes}`,
+          module: 'Production Planning',
+          affectedRecord: planTitle,
+          previousValue: `Plan V${globalState.committedPlanVersion}.0`,
+          newValue: 'Pending Manager Approval',
+        });
+        await syncStateFromBackend();
+        setToast({
+          text: `Plan "${planTitle}" submitted for Manager Review and logged in Audit Trail.`,
+          type: 'success',
+        });
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        setToast({ text: `Failed to submit plan: ${msg}`, type: 'error' });
       }
     },
 

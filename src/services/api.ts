@@ -18,6 +18,7 @@ import {
   WhatIfScenario,
 } from '../types';
 import { AppUser, UserRole } from '../types/auth';
+import { AuditLog, CorrectiveAction } from '../types';
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || '';
@@ -30,11 +31,28 @@ interface ApiEnvelope<T> {
   timestamp: string;
 }
 
+let currentAuthContext = {
+  role: 'ADMIN',
+  id: 'user-admin',
+  name: 'Admin User',
+};
+
+export function setApiAuthContext(user: { role: string; id: string; name: string }) {
+  currentAuthContext = {
+    role: user.role,
+    id: user.id,
+    name: user.name,
+  };
+}
+
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${path}`;
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
+    'x-user-role': currentAuthContext.role,
+    'x-user-id': currentAuthContext.id,
+    'x-user-name': currentAuthContext.name,
     ...(options.headers || {}),
   };
 
@@ -235,6 +253,33 @@ export const ApiService = {
       }
     ),
 
+  rescheduleOperation: (id: string, updates: Partial<Operation>) =>
+    request<Operation>(`/api/operations/${id}/reschedule`, {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+    }),
+
+  // Quality Corrective Actions
+  getCorrectiveActions: () => request<CorrectiveAction[]>('/api/quality/corrective-actions'),
+  createCorrectiveAction: (ca: Partial<CorrectiveAction>) =>
+    request<CorrectiveAction>('/api/quality/corrective-actions', {
+      method: 'POST',
+      body: JSON.stringify(ca),
+    }),
+  updateCorrectiveActionStatus: (id: string, status: string) =>
+    request<CorrectiveAction>(`/api/quality/corrective-actions/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status }),
+    }),
+
+  // Audit Logs
+  getAuditLogs: () => request<AuditLog[]>('/api/audit-logs'),
+  createAuditLog: (entry: Partial<AuditLog>) =>
+    request<AuditLog>('/api/audit-logs', {
+      method: 'POST',
+      body: JSON.stringify(entry),
+    }),
+
   // Workforce & Users
   getEmployees: () => request<Employee[]>('/api/workforce/employees'),
   getEmployeeById: (id: string) => request<Employee>(`/api/workforce/employees/${id}`),
@@ -267,6 +312,8 @@ export const ApiService = {
       recommendations,
       whatIfScenario,
       users,
+      auditLogs,
+      correctiveActions,
     ] = await Promise.all([
       ApiService.getSystemStatus(),
       ApiService.getMachines(),
@@ -282,6 +329,8 @@ export const ApiService = {
       ApiService.getRecommendations(),
       ApiService.getWhatIfScenario(),
       ApiService.getUsers(),
+      ApiService.getAuditLogs().catch(() => []),
+      ApiService.getCorrectiveActions().catch(() => []),
     ]);
 
     return {
@@ -299,6 +348,8 @@ export const ApiService = {
       recommendations,
       whatIfScenario,
       users,
+      auditLogs: auditLogs || [],
+      correctiveActions: correctiveActions || [],
     };
   },
 

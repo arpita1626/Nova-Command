@@ -15,6 +15,7 @@ import alertRoutes from './routes/alert.routes';
 import decisionRoutes from './routes/decision.routes';
 import whatIfRoutes from './routes/whatif.routes';
 import workforceRoutes from './routes/workforce.routes';
+import auditRoutes from './routes/audit.routes';
 
 export const app = express();
 
@@ -65,6 +66,7 @@ app.use('/api/alerts', alertRoutes);
 app.use('/api/decisions', decisionRoutes);
 app.use('/api/what-if', whatIfRoutes);
 app.use('/api/workforce', workforceRoutes);
+app.use('/api/audit-logs', auditRoutes);
 
 // 404 Handler for /api routes
 app.use('/api', (req, res) => {

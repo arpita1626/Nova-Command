@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../services/authContext';
 import { DEMO_USERS } from '../../types/auth';
+import smartFactoryBg from '../../assets/images/smart_factory_bg_1790926457588.jpg';
 
 export const LoginPage: React.FC = () => {
   const { login, isLoading } = useAuth();
@@ -39,23 +40,15 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen h-[100dvh] w-full flex flex-col justify-between bg-[#070B12] text-slate-100 relative overflow-hidden select-none">
-      {/* Background Decorative Grid and Lighting */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
-
-      {/* Subtle Glowing Cyan/Blue Gradient Orbs */}
-      <div
-        className="absolute -top-36 -left-36 w-[520px] h-[520px] rounded-full blur-[120px] pointer-events-none opacity-20"
-        style={{
-          background: 'radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(30, 64, 175, 0.1) 70%, transparent 100%)',
-        }}
-      />
-      <div
-        className="absolute -bottom-40 -right-40 w-[540px] h-[540px] rounded-full blur-[140px] pointer-events-none opacity-20"
-        style={{
-          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, rgba(14, 165, 233, 0.1) 70%, transparent 100%)',
-        }}
-      />
+    <div
+      className="min-h-screen h-[100dvh] w-full flex flex-col justify-between text-slate-100 relative overflow-hidden select-none"
+      style={{
+        backgroundImage: `url(${smartFactoryBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
 
       {/* Top Status Bar */}
       <header className="relative z-10 w-full px-5 py-4 flex items-center justify-between border-b border-[#1E293B]/70 backdrop-blur-md bg-[#0A1019]/60">

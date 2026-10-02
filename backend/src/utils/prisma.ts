@@ -183,6 +183,8 @@ const models = {
   whatIfScenario: new InMemoryModel('whatIfScenario'),
   appUser: new InMemoryModel('appUser'),
   systemState: new InMemoryModel('systemState'),
+  auditLog: new InMemoryModel('auditLog'),
+  correctiveAction: new InMemoryModel('correctiveAction'),
 };
 
 function attachIncludes(modelName: string, item: ModelRecord, include: Record<string, any>): void {

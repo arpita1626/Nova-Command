@@ -21,6 +21,8 @@ import { DecisionCenter } from './components/modules/DecisionCenter';
 import { Analytics } from './components/modules/Analytics';
 import { AlertCenter } from './components/modules/AlertCenter';
 import { AdminSettings } from './components/modules/AdminSettings';
+import { ProductionPlannerDashboard } from './components/modules/ProductionPlannerDashboard';
+import { QualityInspectorDashboard } from './components/modules/QualityInspectorDashboard';
 import { AccessRestricted } from './components/common/AccessRestricted';
 import { UserSelectionModal } from './components/common/UserSelectionModal';
 import { DemoWalkthroughModal } from './components/common/DemoWalkthroughModal';
@@ -69,6 +71,12 @@ function AppContent() {
 
     switch (activeTab) {
       case 'command-center':
+        if (currentUser.role === 'PRODUCTION_PLANNER') {
+          return <ProductionPlannerDashboard />;
+        }
+        if (currentUser.role === 'QUALITY_INSPECTOR') {
+          return <QualityInspectorDashboard />;
+        }
         return <CommandCenter />;
       case 'production':
         return <ProductionPlanning />;
@@ -84,6 +92,8 @@ function AppContent() {
         return <Procurement />;
       case 'quality':
         return <Quality />;
+      case 'corrective-actions':
+        return <Quality initialSection="corrective-actions" />;
       case 'workforce':
         return <Workforce />;
       case 'orders':

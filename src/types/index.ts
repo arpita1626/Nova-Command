@@ -164,6 +164,36 @@ export interface QualityInspection {
   status: 'passed' | 'warning' | 'rejected';
   defects: { type: string; count: number }[];
   correctiveActionId?: string;
+  notes?: string;
+  evidence?: string;
+  inspector?: string;
+}
+
+export interface CorrectiveAction {
+  id: string;
+  inspectionId: string;
+  machineId: string;
+  batchId: string;
+  title: string;
+  description: string;
+  rootCause: string;
+  status: 'open' | 'investigating' | 'implemented' | 'verified';
+  assignedTo: string;
+  dueDate: string;
+  createdAt: string;
+  priority: 'critical' | 'high' | 'medium';
+}
+
+export interface AuditLog {
+  id: string;
+  user: string;
+  role: string;
+  action: string;
+  module: string;
+  timestamp: string;
+  affectedRecord: string;
+  previousValue?: string;
+  newValue?: string;
 }
 
 export interface Alert {

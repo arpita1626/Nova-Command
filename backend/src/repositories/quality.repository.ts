@@ -70,27 +70,110 @@ export class QualityRepository {
         },
       });
 
-      // Automatically generate prioritized alert if defects are detected
+      // Automatically generate prioritized alert and corrective action if defects are detected
       if (data.defectUnits > 0) {
         const alertCount = await tx.alert.count();
         const alId = `AL-${100 + alertCount + 1}`;
+        const caId = `CA-${Date.now().toString().slice(-4)}`;
+        
         await tx.alert.create({
           data: {
             id: alId,
             priority: data.defectUnits > 2 ? 'critical' : 'high',
-            issue: `Quality Defect Spike: ${data.defectUnits} defects detected in ${newQI.batchId} on ${machine.name}`,
-            impact: 'Surface finish tolerances breached. Risk of customer SLA delay & scrap cost.',
-            owner: 'Aria Thorne (Quality Metrology)',
-            recommendedAction: 'Perform tool wear inspection and calibrate spindle runout.',
+            issue: `Quality Defect Spike: ${data.defectUnits} defects in ${newQI.batchId} on ${machine.name}`,
+            impact: 'Surface finish tolerances breached. Production Planner notified for schedule re-evaluation.',
+            owner: 'Priya Das (Quality Inspector)',
+            recommendedAction: 'Halt batch, inspect tooling/bearings, and evaluate schedule impact with Production Planner.',
             status: 'active',
             timestamp: new Date().toISOString(),
             relatedModule: 'quality',
             targetId: machine.id,
           },
         });
+
+        // Auto-create Corrective Action
+        await (tx as any).correctiveAction.create({
+          data: {
+            id: caId,
+            inspectionId: qiId,
+            machineId: machine.id,
+            batchId: newQI.batchId,
+            title: `Resolve ${defects[0]?.type || 'Defects'} on ${machine.name}`,
+            description: `Investigate spindle runout and dimensional drift causing ${data.defectUnits} defective parts in batch ${newQI.batchId}.`,
+            rootCause: 'Suspected bearing degradation or high-speed vibration harmonic',
+            status: 'open',
+            assignedTo: 'Marcus Vance (Senior Mechatronics)',
+            dueDate: 'Tomorrow, 14:00',
+            createdAt: new Date().toISOString(),
+            priority: data.defectUnits > 2 ? 'critical' : 'high',
+          },
+        });
+
+        // Record Audit Log
+        await (tx as any).auditLog.create({
+          data: {
+            id: `AUDIT-${Date.now()}`,
+            user: 'Priya Das',
+            role: 'QUALITY_INSPECTOR',
+            action: `Failed quality inspection for Batch ${newQI.batchId} on ${machine.name} (${data.defectUnits} defect units). Corrective action ${caId} generated.`,
+            module: 'Quality',
+            timestamp: new Date().toISOString(),
+            affectedRecord: newQI.batchId,
+            previousValue: 'Pending Inspection',
+            newValue: status.toUpperCase(),
+          },
+        });
+      } else {
+        // Record passing audit log
+        await (tx as any).auditLog.create({
+          data: {
+            id: `AUDIT-${Date.now()}`,
+            user: 'Priya Das',
+            role: 'QUALITY_INSPECTOR',
+            action: `Approved quality inspection for Batch ${newQI.batchId} on ${machine.name}. All ${data.inspectedUnits} units PASSED.`,
+            module: 'Quality',
+            timestamp: new Date().toISOString(),
+            affectedRecord: newQI.batchId,
+            previousValue: 'Pending Inspection',
+            newValue: 'PASSED',
+          },
+        });
       }
 
       return newQI;
+    });
+  }
+
+  async getAllCorrectiveActions() {
+    return (prisma as any).correctiveAction.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async createCorrectiveAction(data: any) {
+    const id = data.id || `CA-${Date.now().toString().slice(-4)}`;
+    return (prisma as any).correctiveAction.create({
+      data: {
+        id,
+        inspectionId: data.inspectionId || 'QI-MANUAL',
+        machineId: data.machineId || 'M-004',
+        batchId: data.batchId || 'BATCH-GENERAL',
+        title: data.title,
+        description: data.description,
+        rootCause: data.rootCause || 'Under investigation',
+        status: data.status || 'open',
+        assignedTo: data.assignedTo || 'Shop Floor Team',
+        dueDate: data.dueDate || 'In 48 hours',
+        createdAt: new Date().toISOString(),
+        priority: data.priority || 'medium',
+      },
+    });
+  }
+
+  async updateCorrectiveActionStatus(id: string, status: string) {
+    return (prisma as any).correctiveAction.update({
+      where: { id },
+      data: { status },
     });
   }
 }

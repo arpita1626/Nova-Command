@@ -47,10 +47,12 @@ export const AdminSettings: React.FC = () => {
       .substring(0, 2)
       .toUpperCase();
 
-    const avatarColors = {
+    const avatarColors: Record<UserRole, string> = {
       ADMIN: 'bg-purple-600 text-white',
       MANAGER: 'bg-blue-600 text-white',
-      HR: 'bg-emerald-600 text-white',
+      HR: 'bg-teal-600 text-white',
+      PRODUCTION_PLANNER: 'bg-amber-600 text-white',
+      QUALITY_INSPECTOR: 'bg-emerald-600 text-white',
     };
 
     addUser({

@@ -75,6 +75,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         u.id.toLowerCase() === lowerId ||
         (lowerId === 'admin' && u.role === 'ADMIN') ||
         (lowerId === 'manager' && u.role === 'MANAGER') ||
+        (lowerId === 'planner' && u.role === 'PRODUCTION_PLANNER') ||
+        (lowerId === 'inspector' && u.role === 'QUALITY_INSPECTOR') ||
+        (lowerId === 'quality' && u.role === 'QUALITY_INSPECTOR') ||
         (lowerId === 'hr' && u.role === 'HR')
     );
 
@@ -84,7 +87,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       matchedUser = storeState.users.find(
         (u: AppUser) =>
           u.email.toLowerCase() === lowerId ||
-          u.id.toLowerCase() === lowerId
+          u.id.toLowerCase() === lowerId ||
+          (lowerId === 'planner' && u.role === 'PRODUCTION_PLANNER') ||
+          (lowerId === 'inspector' && u.role === 'QUALITY_INSPECTOR')
       );
     }
 

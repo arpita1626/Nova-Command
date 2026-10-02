@@ -11,6 +11,8 @@ import {
   Alert,
   DecisionRecommendation,
   WhatIfScenario,
+  AuditLog,
+  CorrectiveAction,
 } from '../types';
 
 export const initialMachines: Machine[] = [
@@ -1010,3 +1012,93 @@ export const initialWhatIfScenario: WhatIfScenario = {
     oeeDeltaPct: 9.8,
   },
 };
+
+export const initialAuditLogs: AuditLog[] = [
+  {
+    id: 'AUDIT-101',
+    user: 'Rahul Sharma',
+    role: 'PRODUCTION_PLANNER',
+    action: 'Changed production schedule for Order O-1024 (Shifted start by +1.5h to ensure material staging)',
+    module: 'Production Planning',
+    timestamp: '2026-10-02T06:15:00Z',
+    affectedRecord: 'ORDER-1024',
+    previousValue: 'Start 07:00',
+    newValue: 'Start 08:30',
+  },
+  {
+    id: 'AUDIT-102',
+    user: 'Priya Das',
+    role: 'QUALITY_INSPECTOR',
+    action: 'Failed quality inspection for Batch B-204 on Machine M-004 (Excessive surface waviness Ra > 0.8µm)',
+    module: 'Quality',
+    timestamp: '2026-10-02T06:45:00Z',
+    affectedRecord: 'BATCH-B204',
+    previousValue: 'Pending Inspection',
+    newValue: 'REJECTED (SPC Out-of-Control)',
+  },
+  {
+    id: 'AUDIT-103',
+    user: 'Rahul Sharma',
+    role: 'PRODUCTION_PLANNER',
+    action: 'Evaluated machine allocation for OP-27 on M-004 and simulated Standby Cell M-006 rerouting',
+    module: 'What-If Simulator',
+    timestamp: '2026-10-02T07:10:00Z',
+    affectedRecord: 'OP-27 (M-004)',
+    previousValue: 'M-004 Allocation',
+    newValue: 'M-006 Standby Proposed',
+  },
+  {
+    id: 'AUDIT-104',
+    user: 'Priya Das',
+    role: 'QUALITY_INSPECTOR',
+    action: 'Created Corrective Action CA-204: Spindle bearing harmonic vibration investigation',
+    module: 'Quality',
+    timestamp: '2026-10-02T07:25:00Z',
+    affectedRecord: 'CA-204',
+    previousValue: 'N/A',
+    newValue: 'Open (Assigned: Marcus Vance)',
+  },
+  {
+    id: 'AUDIT-105',
+    user: 'Admin User',
+    role: 'ADMIN',
+    action: 'Approved maintenance work order WO-204 and authorized spare bearing requisition',
+    module: 'Decision Center',
+    timestamp: '2026-10-02T07:30:00Z',
+    affectedRecord: 'WO-204',
+    previousValue: 'Draft',
+    newValue: 'Approved & In-Progress',
+  },
+];
+
+export const initialCorrectiveActions: CorrectiveAction[] = [
+  {
+    id: 'CA-204',
+    inspectionId: 'QI-404',
+    machineId: 'M-004',
+    batchId: 'BATCH-8821',
+    title: 'Eliminate Spindle Chatter Waves & Harmonic Runout',
+    description: 'Dimensional drift and surface roughness Ra > 0.8µm observed on Batch B-8821. Perform full spindle bearing replacement and dynamic vibration calibration.',
+    rootCause: 'Accelerated bearing race spalling under high mechanical feed load',
+    status: 'investigating',
+    assignedTo: 'Marcus Vance (Senior Mechatronics)',
+    dueDate: 'Today, 16:00',
+    createdAt: '2026-10-02T07:00:00Z',
+    priority: 'critical',
+  },
+  {
+    id: 'CA-202',
+    inspectionId: 'QI-402',
+    machineId: 'M-002',
+    batchId: 'BATCH-8799',
+    title: 'Verify Coolant Flow & Thermal Compensation Sensor',
+    description: 'Minor thermal drift causing 12µm bore variance in titanium housings.',
+    rootCause: 'Partially clogged coolant nozzle valve',
+    status: 'implemented',
+    assignedTo: 'Elena Chen (Machining Lead)',
+    dueDate: 'Tomorrow, 12:00',
+    createdAt: '2026-10-01T15:30:00Z',
+    priority: 'high',
+  },
+];
+

@@ -47,6 +47,22 @@ export class OperationController {
       next(error);
     }
   }
+
+  async reschedule(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const authName = (req.headers['x-user-name'] as string) || 'Rahul Sharma';
+      const authRole = (req.headers['x-user-role'] as string) || 'PRODUCTION_PLANNER';
+      const updated = await operationService.rescheduleOperation(req.params.id, req.body, authName, authRole);
+      res.json({
+        success: true,
+        data: updated,
+        message: `Operation ${req.params.id} schedule updated.`,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const operationController = new OperationController();
